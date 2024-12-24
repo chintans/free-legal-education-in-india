@@ -1,1 +1,54 @@
- 
+---
+const methods = [
+  {
+    title: "Interactive Learning",
+    description: "Group discussions and debates that encourage active participation",
+    icon: "🗣️"
+  },
+  {
+    title: "Multimedia Approach",
+    description: "Engaging presentations and visual content for better retention",
+    icon: "📱"
+  },
+  {
+    title: "Practical Experience",
+    description: "Role-playing and mock activities for hands-on learning",
+    icon: "🎭"
+  },
+  {
+    title: "Real-world Connection",
+    description: "Case analyses and examples from everyday situations",
+    icon: "📚"
+  },
+  {
+    title: "Creative Exercises",
+    description: "Mock Parliament and court sessions for immersive learning",
+    icon: "⚖️"
+  },
+  {
+    title: "Take-home Resources",
+    description: "Comprehensive materials and contact information for future reference",
+    icon: "📋"
+  }
+];
+---
+
+<section class="py-16 lg:py-20">
+  <div class="max-w-6xl mx-auto px-4">
+    <h2 class="text-3xl lg:text-4xl font-bold lg:tracking-tight text-center mb-4">
+      Our Teaching Methodology
+    </h2>
+    <p class="text-lg text-slate-600 text-center max-w-3xl mx-auto mb-12">
+      We believe that learning about the law should be interactive and fun. Our instructors employ a variety of techniques to ensure our sessions are memorable.
+    </p>
+    <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-8">
+      {methods.map((method) => (
+        <div class="flex flex-col items-center text-center bg-white p-6 rounded-xl shadow-sm">
+          <span class="text-4xl mb-4">{method.icon}</span>
+          <h3 class="text-xl font-semibold mb-2">{method.title}</h3>
+          <p class="text-slate-600">{method.description}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section> 

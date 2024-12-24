@@ -1,1 +1,66 @@
- 
+---
+const sessions = [
+  {
+    title: "Introduction",
+    duration: "15 minutes",
+    points: [
+      "Lively group discussion to break the ice",
+      "Quick overview of the Indian Constitution",
+      "Trivia quiz to spark curiosity"
+    ]
+  },
+  {
+    title: "Constitutional Framework",
+    duration: "20 minutes",
+    points: [
+      "Simplified explanation of key constitutional features",
+      "Deep dive into the Preamble and the Basic Structure Doctrine",
+      "Interactive reading activity to bring the Preamble to life"
+    ]
+  },
+  {
+    title: "Fundamental Rights",
+    duration: "40 minutes",
+    points: [
+      "Right to Equality, explored with everyday examples",
+      "Freedom rights in the digital age, including social media scenarios",
+      "Importance of the Right to Education",
+      "Age-appropriate real-life case studies"
+    ]
+  },
+  {
+    title: "Practical Applications",
+    duration: "25 minutes",
+    points: [
+      "Role-play on bullying and cyber safety",
+      "Discussion on environmental rights and consumer protection for teenagers"
+    ]
+  }
+];
+---
+
+<section class="py-16 lg:py-20 bg-slate-50">
+  <div class="max-w-6xl mx-auto px-4">
+    <h2 class="text-3xl lg:text-4xl font-bold lg:tracking-tight text-center mb-12">
+      Our 2-Hour Interactive Session
+    </h2>
+    <div class="grid md:grid-cols-2 lg:grid-cols-2 gap-8">
+      {sessions.map((session) => (
+        <div class="bg-white p-6 rounded-xl shadow-sm">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-xl font-semibold">{session.title}</h3>
+            <span class="text-sm text-slate-500">{session.duration}</span>
+          </div>
+          <ul class="space-y-2">
+            {session.points.map((point) => (
+              <li class="flex items-start">
+                <span class="text-primary mr-2">•</span>
+                <span class="text-slate-600">{point}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </div>
+</section> 

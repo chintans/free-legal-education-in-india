@@ -1,24 +1,9 @@
 ---
 import Container from "@components/container.astro";
 import Link from "@components/ui/link.astro";
-import Dropdown from "./dropdown.astro";
-import { Astronav, MenuItems, MenuIcon } from "astro-navbar";
+import { Icon } from "astro-icon/components";
 
 const menuitems = [
-  {
-    title: "Features",
-    path: "#",
-    children: [
-      { title: "Action", path: "/" },
-      { title: "Another action", path: "#" },
-      { title: "Dropdown Submenu", path: "#" },
-      { title: "404 Page", path: "/404" },
-    ],
-  },
-  {
-    title: "Pricing",
-    path: "/pricing",
-  },
   {
     title: "About",
     path: "/about",
@@ -31,69 +16,60 @@ const menuitems = [
     title: "Contact",
     path: "/contact",
   },
-  {
-    title: "Pro Version",
-    badge: true,
-    path: "https://astroship-pro.web3templates.com/",
-  },
 ];
 ---
 
 <Container>
   <header class="flex flex-col lg:flex-row justify-between items-center my-5">
-    <Astronav>
-      <div class="flex w-full lg:w-auto items-center justify-between">
-        <a href="/" class="text-lg"
-          ><span class="font-bold text-slate-800">Astro</span><span
-            class="text-slate-500">ship</span
-          >
-        </a>
-        <div class="block lg:hidden">
-          <MenuIcon class="w-4 h-4 text-gray-800" />
-        </div>
+    <div class="flex w-full lg:w-auto items-center justify-between">
+      <a href="/" class="text-lg flex items-center">
+        <Icon name="bx:bxs-book-reader" class="w-6 h-6 mr-2" />
+        <span class="font-bold text-slate-800">Legal Education Initiative</span>
+      </a>
+      <div class="block lg:hidden">
+        <button 
+          id="menu-toggle" 
+          class="text-gray-800">
+          <Icon name="bx:bx-menu" class="w-6 h-6" id="menu-icon" />
+        </button>
       </div>
-      <MenuItems class="hidden w-full lg:w-auto mt-2 lg:flex lg:mt-0">
-        <ul class="flex flex-col lg:flex-row lg:gap-3">
-          {
-            menuitems.map((item, index) => (
-              <>
-                {item.children && (
-                  <Dropdown
-                    title={item.title}
-                    children={item.children}
-                    lastItem={index === menuitems.length - 1}
-                  />
-                )}
-
-                {!item.children && (
-                  <li>
-                    <a
-                      href={item.path}
-                      class="flex lg:px-3 py-2 items-center text-gray-600 hover:text-gray-900">
-                      <span> {item.title}</span>
-                      {item.badge && (
-                        <span class="ml-1 px-2 py-0.5 text-[10px] animate-pulse font-semibold uppercase text-white bg-indigo-600 rounded-full">
-                          New
-                        </span>
-                      )}
-                    </a>
-                  </li>
-                )}
-              </>
-            ))
-          }
-        </ul>
-        <div class="lg:hidden flex items-center mt-3 gap-4">
-          <Link href="#" style="muted" block size="md">Log in</Link>
-          <Link href="#" size="md" block>Sign up</Link>
-        </div>
-      </MenuItems>
-    </Astronav>
+    </div>
+    <nav
+      id="nav-menu"
+      class="hidden w-full lg:w-auto mt-2 lg:flex lg:mt-0">
+      <ul class="flex flex-col lg:flex-row lg:gap-3">
+        {
+          menuitems.map((item) => (
+            <li>
+              <a
+                href={item.path}
+                class="flex lg:px-3 py-2 text-gray-600 hover:text-gray-900">
+                {item.title}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <div class="lg:hidden flex items-center mt-3 gap-4">
+        <Link href="/contact" size="md" block>Schedule a Session</Link>
+      </div>
+    </nav>
     <div>
       <div class="hidden lg:flex items-center gap-4">
-        <a href="#">Log in</a>
-        <Link href="#" size="md">Sign up</Link>
+        <Link href="/contact" size="md">Schedule a Session</Link>
       </div>
     </div>
   </header>
 </Container>
+
+<script>
+  const menuToggle = document.getElementById('menu-toggle');
+  const navMenu = document.getElementById('nav-menu');
+  const menuIcon = document.getElementById('menu-icon');
+
+  menuToggle?.addEventListener('click', () => {
+    navMenu?.classList.toggle('hidden');
+    const isMenuOpen = !navMenu?.classList.contains('hidden');
+    menuIcon?.setAttribute('name', isMenuOpen ? 'bx:bxs-x-circle' : 'bx:bxs-menu');
+  });
+</script>
