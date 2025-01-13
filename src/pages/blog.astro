@@ -4,16 +4,21 @@ import { Picture } from "astro:assets";
 import Layout from "@layouts/Layout.astro";
 import Container from "@components/container.astro";
 import Sectionhead from "@components/sectionhead.astro";
+// Fetch API URL and token from environment variables
+let apiUrl = import.meta.env.STRAPI_URL || "http://192.168.29.124:1337";
 
-// Filter blog entries with 'draft: false' & date before current date
-const publishedBlogEntries = await getCollection("blog", ({ data }) => {
-  return !data.draft && data.publishDate < new Date();
-});
+let publishedBlogEntries = [];
+const url = `${apiUrl}/api/posts`;
 
-// Sort content entries by publication date
-publishedBlogEntries.sort(function (a, b) {
-  return b.data.publishDate.valueOf() - a.data.publishDate.valueOf();
-});
+const posts = await fetch(url)
+  .then((response) => {
+    return response.json();
+  })
+  .catch((error) => {
+    console.error("Error fetching posts:", error);
+    return null;
+  });
+publishedBlogEntries = posts.data.filter((x) => !x.isDraft);
 ---
 
 <Layout title="Blog">
@@ -31,34 +36,32 @@ publishedBlogEntries.sort(function (a, b) {
             <li>
               <a href={`/blog/${blogPostEntry.slug}`}>
                 <div class="grid md:grid-cols-2 gap-5 md:gap-10 items-center">
-                  <Picture
-                    src={blogPostEntry.data.image.src}
-                    alt={blogPostEntry.data.image.alt}
+                  {/* <Picture
+                    src={blogPostEntry.image}
+                    alt="img"
                     sizes="(max-width: 800px) 100vw, 800px"
                     width={800}
                     height={600}
                     loading={index <= 2 ? "eager" : "lazy"}
                     decoding={index <= 2 ? "sync" : "async"}
                     class="w-full rounded-md object-cover object-center bg-white"
-                  />
+                  /> */}
                   <div>
                     <span class="text-blue-400 uppercase tracking-wider text-sm font-medium">
-                      {blogPostEntry.data.category}
+                      {blogPostEntry.category}
                     </span>
 
                     <h2 class="text-3xl font-semibold leading-snug tracking-tight mt-1 ">
-                      {blogPostEntry.data.title}
+                      {blogPostEntry.title}
                     </h2>
 
                     <div class="flex gap-2 mt-3">
-                      <span class="text-gray-400">
-                        {blogPostEntry.data.author}
-                      </span>
+                      <span class="text-gray-400">{blogPostEntry.author}</span>
                       <span class="text-gray-400">• </span>
                       <time
                         class="text-gray-400"
-                        datetime={blogPostEntry.data.publishDate.toISOString()}>
-                        {blogPostEntry.data.publishDate.toDateString()}
+                        datetime={blogPostEntry.publishDate}>
+                        {blogPostEntry.publishDate}
                       </time>
                     </div>
                   </div>
