@@ -5,11 +5,10 @@ import Layout from "@layouts/Layout.astro";
 import Container from "@components/container.astro";
 import Sectionhead from "@components/sectionhead.astro";
 // Fetch API URL and token from environment variables
-let apiUrl = import.meta.env.STRAPI_URL || "http://192.168.29.124:1337";
+let apiUrl = import.meta.env.STRAPI_URL;
 
 let publishedBlogEntries = [];
-const url = `${apiUrl}/api/posts`;
-
+const url = `${apiUrl}/api/posts?populate=*`;
 const posts = await fetch(url)
   .then((response) => {
     return response.json();
@@ -18,7 +17,7 @@ const posts = await fetch(url)
     console.error("Error fetching posts:", error);
     return null;
   });
-publishedBlogEntries = posts.data.filter((x) => !x.isDraft);
+publishedBlogEntries = posts.data.filter((x) => x.isPublished);
 ---
 
 <Layout title="Blog">
@@ -36,8 +35,8 @@ publishedBlogEntries = posts.data.filter((x) => !x.isDraft);
             <li>
               <a href={`/blog/${blogPostEntry.slug}`}>
                 <div class="grid md:grid-cols-2 gap-5 md:gap-10 items-center">
-                  {/* <Picture
-                    src={blogPostEntry.image}
+                  <Picture
+                    src={`${apiUrl}`+blogPostEntry.image.url}
                     alt="img"
                     sizes="(max-width: 800px) 100vw, 800px"
                     width={800}
@@ -45,10 +44,10 @@ publishedBlogEntries = posts.data.filter((x) => !x.isDraft);
                     loading={index <= 2 ? "eager" : "lazy"}
                     decoding={index <= 2 ? "sync" : "async"}
                     class="w-full rounded-md object-cover object-center bg-white"
-                  /> */}
+                  />
                   <div>
                     <span class="text-blue-400 uppercase tracking-wider text-sm font-medium">
-                      {blogPostEntry.category}
+                      {blogPostEntry.category.Name}
                     </span>
 
                     <h2 class="text-3xl font-semibold leading-snug tracking-tight mt-1 ">
@@ -56,7 +55,7 @@ publishedBlogEntries = posts.data.filter((x) => !x.isDraft);
                     </h2>
 
                     <div class="flex gap-2 mt-3">
-                      <span class="text-gray-400">{blogPostEntry.author}</span>
+                      <span class="text-gray-400">{blogPostEntry.author.Name}</span>
                       <span class="text-gray-400">• </span>
                       <time
                         class="text-gray-400"
