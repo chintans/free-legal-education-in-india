@@ -1,24 +1,25 @@
 ---
-import { getCollection } from "astro:content";
 import { Picture } from "astro:assets";
 import Layout from "@layouts/Layout.astro";
 import Container from "@components/container.astro";
 import Sectionhead from "@components/sectionhead.astro";
-// Fetch API URL and token from environment variables
-let apiUrl = import.meta.env.STRAPI_URL;
+import fetchApi from "@lib/strapi";
+import type Article from "@interfaces/article";
 
-let publishedBlogEntries = [];
-const url = `${apiUrl}/api/posts?populate=*`;
-const posts = await fetch(url)
-  .then((response) => {
-    return response.json();
-  })
-  .catch((error) => {
-    console.error("Error fetching posts:", error);
-    return null;
-  });
-publishedBlogEntries = posts.data.filter((x) => x.isPublished);
+let publishedBlogEntries: Article[] = [];
+const posts = await fetchApi<Article[]>({
+  endpoint: "posts",
+  query: {
+    populate: "*",
+  },
+  wrappedByList: false,
+  wrappedByKey: "data",
+});
+publishedBlogEntries = posts.filter((x) => x.isPublished);
 ---
+
+
+
 
 <Layout title="Blog">
   <Container>
@@ -36,7 +37,7 @@ publishedBlogEntries = posts.data.filter((x) => x.isPublished);
               <a href={`/blog/${blogPostEntry.slug}`}>
                 <div class="grid md:grid-cols-2 gap-5 md:gap-10 items-center">
                   <Picture
-                    src={`${apiUrl}`+blogPostEntry.image.url}
+                    src={blogPostEntry.image.url}
                     alt="img"
                     sizes="(max-width: 800px) 100vw, 800px"
                     width={800}
@@ -50,19 +51,27 @@ publishedBlogEntries = posts.data.filter((x) => x.isPublished);
                       {blogPostEntry.category.Name}
                     </span>
 
+
+
                     <h2 class="text-3xl font-semibold leading-snug tracking-tight mt-1 ">
                       {blogPostEntry.title}
                     </h2>
+
+
 
                     <div class="flex gap-2 mt-3">
                       <span class="text-gray-400">{blogPostEntry.author.Name}</span>
                       <span class="text-gray-400">• </span>
                       <time
+
                         class="text-gray-400"
+
                         datetime={blogPostEntry.publishDate}>
                         {blogPostEntry.publishDate}
                       </time>
+
                     </div>
+
                   </div>
                 </div>
               </a>
