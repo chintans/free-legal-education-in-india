@@ -23,8 +23,7 @@ export default async function fetchApi<T>({
         endpoint = endpoint.slice(1);
     }
 
-    const url = new URL(`${import.meta.env.STRAPI_URL}/api/${endpoint}`);
-    console.log(url.toString());
+    const url = new URL(`${import.meta.env.STRAPI_URL}/api/${endpoint}`);    
 
     if (query) {
         Object.entries(query).forEach(([key, value]) => {
@@ -32,15 +31,13 @@ export default async function fetchApi<T>({
         });
     }
     const res = await fetch(url.toString());
-    let data = await res.json();
-    console.log(data);
+    let data = await res.json();    
 
     if (wrappedByKey) {
         data = data[wrappedByKey];
     }
 
-    if (wrappedByList) {
-        console.log('wrappedByList');
+    if (wrappedByList) {        
         data = data[0];
     }
 
