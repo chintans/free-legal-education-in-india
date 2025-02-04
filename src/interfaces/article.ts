@@ -82,7 +82,7 @@ export default interface Article {
     documentId: string;
     title: string;
     slug: string;
-    content: ContentBlock[];
+    content: string;
     isPublished: boolean;
     publishDate: string;
     createdAt: string;

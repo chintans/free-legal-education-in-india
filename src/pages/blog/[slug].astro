@@ -1,29 +1,41 @@
 ---
-import { Astro } from "astro";
 import Layout from "@layouts/Layout.astro";
 import Container from "@components/container.astro";
-
-
+import fetchApi from "@lib/strapi";
+import type Article from "@interfaces/article";
+import rehypeStringify from "rehype-stringify";
+import remarkParse from "remark-parse";
+import remarkRehype from "remark-rehype";
+import { unified } from "unified";
 
 export const prerender = false;
 
-const { slug } = Astro.url.pathname.match(/\/blog\/(?<slug>[^/]+)/)?.groups;
-// Fetch API URL and token from environment variables
-let apiUrl = import.meta.env.STRAPI_URL;
-
-let postData = {};
+const { slug } = Astro.url.pathname.match(/\/blog\/(?<slug>[^/]+)/)?.groups ?? {
+  slug: "",
+};
 
 async function fetchPostData(slug) {
- // const strapiUrl = `${apiUrl}/api/posts?filters[slug]=${slug}`;
- const dataUrl=`${apiUrl}/api/posts?filters[slug]=${slug}&populate=*`;
-  const response = await fetch(dataUrl);
-  const data = await response.json();
-  postData = data.data[0];
+  const response = await fetchApi<Article[]>({
+    endpoint: "posts",
+    query: {
+      "filters[slug]": slug,
+      populate: "*",
+    },
+    wrappedByKey: "data",
+    wrappedByList: false,
+  });
+  return response[0];
 }
 
-await fetchPostData(slug);
+const postData = await fetchPostData(slug);
+const processor = unified()
+  .use(remarkParse)
+  .use(remarkRehype, { allowDangerousHtml: true })
+  .use(rehypeStringify);
 
+const content = String(await processor.process(postData.content));
 ---
+
 
 <Layout title={postData.title}>
   <Container>
@@ -40,16 +52,16 @@ await fetchPostData(slug);
           {postData.author.Name}
         </span>
         <span class="text-gray-400">•</span>
-        <time
-          class="text-gray-400"
-          datetime={postData.publishDate}>
+        <time class="text-gray-400" datetime={postData.publishDate}>
           {postData.publishDate}
         </time>
         <span class="text-gray-400 hidden md:block">•</span>
-       
       </div>
     </div>
-    
+    <div class="mt-12">
+      <div class="prose max-w-none" set:html={content} />
+    </div>
+
     <div class="text-center mt-8">
       <a
         href="/blog"
@@ -59,4 +71,3 @@ await fetchPostData(slug);
     </div>
   </Container>
 </Layout>
-

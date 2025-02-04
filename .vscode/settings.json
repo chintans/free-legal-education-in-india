@@ -4,6 +4,7 @@
         "boxicons",
         "frontmatter",
         "iconify",
-        "sectionhead"
+        "sectionhead",
+        "strapi"
     ]
 }
