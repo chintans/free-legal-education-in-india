@@ -4,6 +4,7 @@
         "boxicons",
         "frontmatter",
         "iconify",
+        "Rehype",
         "sectionhead",
         "strapi"
     ]

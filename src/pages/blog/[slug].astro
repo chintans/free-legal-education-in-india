@@ -3,7 +3,11 @@ import Layout from "@layouts/Layout.astro";
 import Container from "@components/container.astro";
 import fetchApi from "@lib/strapi";
 import type Article from "@interfaces/article";
+import rehypeFormat from "rehype-format";
 import rehypeStringify from "rehype-stringify";
+import remarkDirective from "remark-directive";
+import remarkFrontmatter from "remark-frontmatter";
+import remarkGfm from "remark-gfm";
 import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 import { unified } from "unified";
@@ -30,12 +34,15 @@ async function fetchPostData(slug) {
 const postData = await fetchPostData(slug);
 const processor = unified()
   .use(remarkParse)
+  .use(remarkDirective)
+  .use(remarkFrontmatter)
+  .use(remarkGfm)
   .use(remarkRehype, { allowDangerousHtml: true })
+  .use(rehypeFormat)
   .use(rehypeStringify);
 
 const content = String(await processor.process(postData.content));
 ---
-
 
 <Layout title={postData.title}>
   <Container>
