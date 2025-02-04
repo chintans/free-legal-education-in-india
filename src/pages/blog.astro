@@ -37,7 +37,7 @@ publishedBlogEntries = posts.filter((x) => x.isPublished);
               <a href={`/blog/${blogPostEntry.slug}`}>
                 <div class="grid md:grid-cols-2 gap-5 md:gap-10 items-center">
                   <Picture
-                    src={blogPostEntry.image.url}
+                    src={`${import.meta.env.STRAPI_URL}${blogPostEntry.image.url}`}
                     alt="img"
                     sizes="(max-width: 800px) 100vw, 800px"
                     width={800}
