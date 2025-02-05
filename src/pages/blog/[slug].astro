@@ -76,7 +76,7 @@ const content = String(await processor.process(postData.content));
 
     <div
       class="w-full max-w-4xl mx-auto prose prose-lg dark:prose-invert px-4 md:px-6 prose-headings:text-gray-900 prose-p:text-gray-900 dark:prose-headings:text-white dark:prose-p:text-white text-pretty">
-      <div class="text-balance" set:html={content} />
+      <div class="text-balance blog-post-content" set:html={content} />
     </div>
 
     <div class="w-full max-w-4xl mx-auto mt-12 text-center px-4 md:px-6">
