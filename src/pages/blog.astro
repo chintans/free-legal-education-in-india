@@ -25,7 +25,7 @@ publishedBlogEntries = posts.filter((x) => x.isPublished);
   <Container>
     <Sectionhead>
       <Fragment slot="title">Our Blog</Fragment>
-      <Fragment slot="desc">
+      <Fragment slot="desc" class="text-gray-700 dark:text-gray-300">
         We write about building startups and thoughts going on our mind.
       </Fragment>
     </Sectionhead>
@@ -44,34 +44,22 @@ publishedBlogEntries = posts.filter((x) => x.isPublished);
                     height={600}
                     loading={index <= 2 ? "eager" : "lazy"}
                     decoding={index <= 2 ? "sync" : "async"}
-                    class="w-full rounded-md object-cover object-center bg-white"
+                    class="w-full rounded-md object-cover object-center bg-white dark:bg-gray-800"
                   />
                   <div>
-                    <span class="text-blue-400 uppercase tracking-wider text-sm font-medium">
+                    <span class="text-blue-600 dark:text-blue-400 uppercase tracking-wider text-sm font-medium">
                       {blogPostEntry.category.Name}
                     </span>
-
-
-
-                    <h2 class="text-3xl font-semibold leading-snug tracking-tight mt-1 ">
+                    <h2 class="text-3xl font-semibold leading-snug tracking-tight mt-1 text-gray-900 dark:text-white">
                       {blogPostEntry.title}
                     </h2>
-
-
-
                     <div class="flex gap-2 mt-3">
-                      <span class="text-gray-400">{blogPostEntry.author.Name}</span>
-                      <span class="text-gray-400">• </span>
-                      <time
-
-                        class="text-gray-400"
-
-                        datetime={blogPostEntry.publishDate}>
+                      <span class="text-gray-600 dark:text-gray-400">{blogPostEntry.author.Name}</span>
+                      <span class="text-gray-400 dark:text-gray-500">• </span>
+                      <time class="text-gray-600 dark:text-gray-400" datetime={blogPostEntry.publishDate}>
                         {blogPostEntry.publishDate}
                       </time>
-
                     </div>
-
                   </div>
                 </div>
               </a>

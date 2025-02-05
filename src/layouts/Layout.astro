@@ -48,11 +48,50 @@ const makeTitle = title
       }}
     />
   </head>
-  <body>
+  <body class="bg-white dark:bg-gray-900">
     <Navbar />
     <slot />
     <Footer />
     <style is:global>
+      html {
+        @apply antialiased scroll-smooth;
+      }
+      
+      body {
+        @apply bg-white dark:bg-gray-900 text-gray-900 dark:text-white;
+      }
+
+      /* Base text colors for common elements */
+      h1, h2, h3, h4, h5, h6 {
+        @apply text-gray-900 dark:text-white;
+      }
+
+      p {
+        @apply text-gray-800 dark:text-gray-200;
+      }
+
+      /* Prose styles for content */
+      .prose {
+        @apply 
+          prose-headings:text-gray-900 dark:prose-headings:text-white
+          prose-p:text-gray-800 dark:prose-p:text-gray-200
+          prose-strong:text-gray-900 dark:prose-strong:text-white
+          prose-ul:text-gray-800 dark:prose-ul:text-gray-200
+          prose-ol:text-gray-800 dark:prose-ol:text-gray-200
+          prose-li:text-gray-800 dark:prose-li:text-gray-200
+          prose-a:text-blue-600 dark:prose-a:text-blue-400
+          prose-blockquote:text-gray-800 dark:prose-blockquote:text-gray-200;
+      }
+
+      /* Utility classes for text colors */
+      .text-default {
+        @apply text-gray-800 dark:text-gray-200;
+      }
+
+      .text-muted {
+        @apply text-gray-600 dark:text-gray-400;
+      }
+
       img {
         content-visibility: auto;
       }
