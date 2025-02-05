@@ -47,10 +47,11 @@ const content = String(await processor.process(postData.content));
 <Layout title={postData.title}>
   <Container>
     <div class="w-full max-w-4xl mx-auto mt-14 px-4 md:px-6">
-      <span class="text-blue-500 uppercase tracking-wider text-sm font-medium"> 
+      <span class="text-blue-500 uppercase tracking-wider text-sm font-medium">
         {postData.category.Name}
       </span>
-      <h1 class="text-3xl lg:text-4xl font-bold leading-tight mt-2 text-gray-900 dark:text-white">
+      <h1
+        class="text-3xl lg:text-4xl font-bold leading-tight mt-2 text-gray-900 dark:text-white">
         {postData.title}
       </h1>
       <div class="flex gap-3 mt-4 items-center flex-wrap">
@@ -58,19 +59,39 @@ const content = String(await processor.process(postData.content));
           {postData.author.Name}
         </span>
         <span class="text-gray-400">•</span>
-        <time class="text-gray-900 dark:text-white font-medium" datetime={postData.publishDate}>
-          {new Date(postData.publishDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+        <time
+          class="text-gray-900 dark:text-white font-medium"
+          datetime={postData.publishDate}>
+          {
+            new Date(postData.publishDate).toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })
+          }
         </time>
       </div>
-      <hr class="my-8 border-gray-200" /> 
+      <hr class="my-8 border-gray-200" />
     </div>
 
-    <div class="w-full max-w-4xl mx-auto prose prose-lg dark:prose-invert px-4 md:px-6 prose-headings:text-gray-900 prose-p:text-gray-900 dark:prose-headings:text-white dark:prose-p:text-white">
-      <div set:html={content} />
+    <div
+      class="w-full max-w-4xl mx-auto prose prose-lg dark:prose-invert px-4 md:px-6 prose-headings:text-gray-900 prose-p:text-gray-900 dark:prose-headings:text-white dark:prose-p:text-white text-pretty">
+      <div class="text-balance" set:html={content} />
     </div>
 
     <div class="w-full max-w-4xl mx-auto mt-12 text-center px-4 md:px-6">
-      <a href="/blog" class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg transition duration-300 ease-in-out">← Back to Blog</a>
+      <a
+        href="/blog"
+        class="inline-block bg-blue-500 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg transition duration-300 ease-in-out"
+        >← Back to Blog</a
+      >
     </div>
   </Container>
 </Layout>
+<style is:global>
+  p > a {
+    word-wrap: break-word; /* Allows the text to break at any character */
+    overflow-wrap: break-word; /* An alternative property, similar to word-wrap */
+    hyphens: auto; /* Optional: Adds hyphens to improve line breaks */
+  }
+</style>
