@@ -12,26 +12,24 @@ import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 import { unified } from "unified";
 
-export const prerender = false;
+export const prerender = true;
 
-const { slug } = Astro.url.pathname.match(/\/blog\/(?<slug>[^/]+)/)?.groups ?? {
-  slug: "",
-};
-
-async function fetchPostData(slug) {
-  const response = await fetchApi<Article[]>({
+export async function getStaticPaths() {
+  const posts: Article[] = await fetchApi<Article[]>({
     endpoint: "posts",
-    query: {
-      "filters[slug]": slug,
+    query: {      
       populate: "*",
     },
     wrappedByKey: "data",
     wrappedByList: false,
   });
-  return response[0];
+  console.log(posts);
+  return posts.map((post) => ({ params: { slug: post.slug }, props: post }));
 }
 
-const postData = await fetchPostData(slug);
+
+const postData = Astro.props;
+console.log(postData);
 const processor = unified()
   .use(remarkParse)
   .use(remarkDirective)

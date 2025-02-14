@@ -11,5 +11,5 @@ export default defineConfig({
   site: "https://free-legal-education-in-india.com",
   integrations: [tailwind(), mdx(), sitemap(), icon()],
   adapter: netlify(),
-  output: "server",
+  output: "static",
 });
