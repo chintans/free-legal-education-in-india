@@ -6,10 +6,12 @@ import icon from "astro-icon";
 
 import netlify from "@astrojs/netlify";
 
+import partytown from "@astrojs/partytown";
+
 // https://astro.build/config
 export default defineConfig({
   site: "https://free-legal-education-in-india.com",
-  integrations: [tailwind(), mdx(), sitemap(), icon()],
+  integrations: [tailwind(), mdx(), sitemap(), icon(), partytown()],
   adapter: netlify(),
   output: "static",
 });

@@ -3,7 +3,7 @@ import { SEO } from "astro-seo";
 import Footer from "@components/footer.astro";
 import Navbar from "@components/navbar/navbar.astro";
 import "@fontsource-variable/inter/index.css";
-import '@fontsource-variable/bricolage-grotesque';
+import "@fontsource-variable/bricolage-grotesque";
 
 export interface Props {
   title: string;
@@ -23,14 +23,13 @@ const makeTitle = title
   : "Legal Education Initiative - Empowering Young Minds with Legal Knowledge";
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
-
     <SEO
       title={makeTitle}
       description="A non-profit initiative bringing free legal education to school students across India. Understanding rights, building awareness, and creating informed citizens."
@@ -47,6 +46,18 @@ const makeTitle = title
         },
       }}
     />
+
+    <!-- Google tag (gtag.js) -->
+    <script type="text/partytown" async src="https://www.googletagmanager.com/gtag/js?id=G-RQ87T4374G"></script>
+    <script type="text/partytown">
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-RQ87T4374G");
+    </script>
   </head>
   <body class="bg-white dark:bg-gray-900">
     <Navbar />
@@ -56,13 +67,18 @@ const makeTitle = title
       html {
         @apply antialiased scroll-smooth;
       }
-      
+
       body {
         @apply bg-white dark:bg-gray-900 text-gray-900 dark:text-white;
       }
 
       /* Base text colors for common elements */
-      h1, h2, h3, h4, h5, h6 {
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
         @apply text-gray-900 dark:text-white;
       }
 
@@ -72,8 +88,7 @@ const makeTitle = title
 
       /* Prose styles for content */
       .prose {
-        @apply 
-          prose-headings:text-gray-900 dark:prose-headings:text-white
+        @apply prose-headings:text-gray-900 dark:prose-headings:text-white
           prose-p:text-gray-800 dark:prose-p:text-gray-200
           prose-strong:text-gray-900 dark:prose-strong:text-white
           prose-ul:text-gray-800 dark:prose-ul:text-gray-200
